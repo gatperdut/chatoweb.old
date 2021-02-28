@@ -1,0 +1,43 @@
+%form{ name: 'form.object', 'ng-submit' => 'submit()' }
+  
+  .form-group
+    %label
+      What is the base?
+    %div
+      .btn-group
+        %label.btn.btn-success{ 'ng-model' => 'model.armor_stat_template.base', 'ng-repeat' => 'base in ConstantsCache.storage.armorInfo.bases', 'uib-btn-radio' => 'base' }
+          {{ base }}
+
+  %item-template-common{ model: 'model' }
+
+  %item-template-worn{ model: 'model', mandatory: 'true' }
+
+  
+  .form-group
+    %label
+      What is the maneuver impediment?
+    %div
+      .btn-group
+        %label.btn.btn-success{ 'ng-model' => 'model.armor_stat_template.maneuver_impediment', 'ng-repeat' => 'maneuver_impediment in ConstantsCache.storage.armorInfo.maneuver_impediments', 'uib-btn-radio' => 'maneuver_impediment' }
+          {{ maneuver_impediment }}
+
+  .form-group
+    %label
+      What is the ranged attack impediment?
+    %div
+      .btn-group
+        %label.btn.btn-success{ 'ng-model' => 'model.armor_stat_template.ranged_attack_impediment', 'ng-repeat' => 'ranged_attack_impediment in ConstantsCache.storage.armorInfo.ranged_attack_impediments', 'uib-btn-radio' => 'ranged_attack_impediment' }
+          {{ ranged_attack_impediment }}
+
+  .form-group
+    %label
+      Which body parts does it cover?
+    %i
+      Select one at least.
+    %div
+      .btn-group
+        %label.btn.btn-success{ 'ng-model' => 'bodyPartsAux[body_part]', 'ng-repeat' => 'body_part in ConstantsCache.storage.armorInfo.body_parts', 'uib-btn-checkbox' => '' }
+          {{ body_part }}
+        %input{ style: 'display: none;', type: 'number', 'ng-model' => 'zero', min: '1', 'ng-if' => '!model.armor_stat_template.body_parts.length' }
+
+  {{ model }}

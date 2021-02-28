@@ -1,0 +1,14 @@
+%form{ name: 'form.object', 'ng-submit' => 'submit()', novalidate: '' }
+
+  %uib-tabset{ active: 'activeTab' }
+
+    %uib-tab{ heading: 'Naming' }
+      %div{ 'ng-include' => 'partials.names' }
+    
+    %uib-tab{ heading: 'Ingredients' }
+      %div{ 'ng-include' => 'partials.ingredients' }
+
+    %uib-tab{ heading: 'Steps' }
+      %div{ 'ng-include' => 'partials.steps.main' }
+
+  {{ model }}

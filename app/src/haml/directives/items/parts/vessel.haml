@@ -1,0 +1,20 @@
+%div
+  
+  %item-material{ model: 'model' }
+
+  %item-common{ model: 'model' }
+
+  %item-worn{ model: 'model' }
+
+  .form-group
+    %label
+      Type of fluid:
+    %ui-select{ 'ng-model' => 'model.drink.fluid' }
+      %ui-select-match
+        {{ $select.selected }}
+      %ui-select-choices{ repeat: 'fluid as fluid in ConstantsCache.storage.fluids' }
+        %span{ 'ng-bind-html' => "'' + fluid | highlight: $select.search" }
+
+  %item-containing-inventory{ model: 'model' }
+  
+  {{ model }}

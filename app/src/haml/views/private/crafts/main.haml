@@ -1,0 +1,22 @@
+.row
+  .col-md-12
+    %h2
+      Crafts
+      %button.btn.btn-success.pull-right{ 'ng-click' => 'create()' }
+        Create craft
+
+  .col-md-12
+    .well.row
+      %div{ 'ng-if' => '!CraftCache.presence.any()' }
+        No crafts present yet.
+
+      %div{ 'ng-if' => 'CraftCache.presence.any()' }
+        %ul.list-unstyled
+          %li.col-md-4{ 'ng-repeat' => 'craft in CraftCache.storage.crafts' }
+            %button.btn.btn-danger.btn-xs{ 'ng-click' => 'remove(craft)' }
+              %i.fa.fa-times
+            %button.btn.btn-success.btn-xs{ 'ng-click' => 'edit(craft)' }
+              %i.fa.fa-edit
+            %span.label.label-primary
+              {{ CraftUtilsService.title(craft) }}
+

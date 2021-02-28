@@ -1,0 +1,18 @@
+.row
+  .col-md-12
+    %h2
+      Items
+
+  .col-md-12
+    .well.row
+      %div{ 'ng-if' => '!ItemCache.presence.any()' }
+        No items present yet.
+
+      %div{ 'ng-if' => 'ItemCache.presence.any()' }
+        %ul.list-unstyled
+          %li.col-md-3{ 'ng-repeat' => 'item in ItemCache.storage.items' }
+            %button.btn.btn-danger.btn-xs{ 'ng-click' => 'remove(item)' }
+              %i.fa.fa-times
+            %span.label.label-primary
+              {{ item.short_desc }}
+

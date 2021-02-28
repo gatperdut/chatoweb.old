@@ -1,0 +1,85 @@
+%form{ name: 'form', 'ng-submit' => 'submit()' }
+  .row
+    .col-md-12
+      %button.btn.btn-success.pull-right{ type: 'submit', 'ng-disabled' => 'form.$invalid' }
+        Save
+    .col-md-4
+      .row
+        .col-md-12
+          %h3.text-center
+            Description
+        .col-md-12
+          .well
+            .row
+              .col-md-12
+                .form-group
+                  %label
+                    Name:
+                  %input.form-control{ type: 'text', required: true, 'ng-model' => 'model.name' }
+
+                .form-group
+                  %label
+                    Gender:
+                  %div
+                    .btn-group
+                      %label.btn.btn-success{ 'ng-model' => 'model.gender', 'uib-btn-radio' => "'male'" }
+                        Male
+                      %label.btn.btn-success{ 'ng-model' => 'model.gender', 'uib-btn-radio' => "'female'" }
+                        Female
+
+                .form-group
+                  %label
+                    Short description (e.g. "a brown-haired, tall man"):
+                  %input.form-control{ type: 'text', required: true, 'ng-model' => 'model.short_desc' }
+
+                .form-group
+                  %label
+                    Long description (e.g. "A brown-haired, tall man is here."):
+                  %input.form-control{ type: 'text', required: true, 'ng-model' => 'model.long_desc' }
+
+                .form-group
+                  %label
+                    Full description (what others will be see when looking at them):
+                  %textarea.form-control{ type: 'text', rows: '5', required: true, 'ng-model' => 'model.full_desc', style: 'resize: vertical;' }
+
+                .form-group
+                  %label
+                    Keywords (e.g. "brown-haired tall name"):
+                  %tags-input{ 'ng-model' => 'model.kwords', 'add-on-paste' => 'true', 'replace-spaces-with-dashes' => 'false', 'add-on-space' => 'true', 'use-strings' => 'true', 'min-tags' => 1 }
+
+    .col-md-8
+      .row
+        .col-md-12
+          %h3.text-center
+            Attributes
+        .col-md-12
+          .well
+            .row
+              .col-md-6{ 'ng-repeat' => 'attribute in AttributeSetUtilsService.attributes'}
+                .well
+                  %span{ style: 'font-size: 17px;' }
+                    {{ attribute }} [{{ AttributeSetUtilsService.find(model.attribute_set[attribute]).bonus }}] [{{ AttributeSetUtilsService.find(model.attribute_set[attribute]).label }}]
+                  %rzslider{ 'rz-slider-model' => 'model.attribute_set[attribute]', 'rz-slider-options' => 'sliderOptions.attribute' }
+        
+
+  .row
+    .col-md-12
+      %h3.text-center
+        Skill categories
+      .row.well
+        .col-md-4{ 'ng-repeat' => 'skillCategory in ConstantsCache.storage.skillCategories.all' }
+          .well
+            %span{ style: 'font-size: 17px;' }
+              {{ skillCategory.name }} [{{ SkillSetUtilsService.categoryRank(skillCategory, model).rate }}] [{{ SkillSetUtilsService.categoryRank(skillCategory, model).bonus }}]
+            %rzslider{ 'rz-slider-model' => 'model.skill_set[skillCategory.name]', 'rz-slider-options' => 'sliderOptions.skill' }
+
+  .row
+    .col-md-12
+      %h3.text-center
+        Skills
+      .row.well
+        .col-md-4{ 'ng-repeat' => 'skill in ConstantsCache.storage.skills.all' }
+          .well
+            %span{ style: 'font-size: 17px;' }
+              {{ skill.name }} [{{ SkillSetUtilsService.rank(skill, model).bonus }}] [{{ SkillSetUtilsService.rank(skill, model).rate }}] [Total: {{ SkillSetUtilsService.rank(skill, model).bonus + SkillSetUtilsService.categoryRankByName(skill.skill_category, model).bonus }} ({{ SkillSetUtilsService.skillModifierLabel(SkillSetUtilsService.rank(skill, model).bonus + SkillSetUtilsService.categoryRankByName(skill.skill_category, model).bonus) }})]
+            %rzslider{ 'rz-slider-model' => 'model.skill_set[skill.name]', 'rz-slider-options' => 'sliderOptions.skill' }

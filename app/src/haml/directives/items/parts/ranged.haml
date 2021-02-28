@@ -1,0 +1,35 @@
+%div
+  
+  %item-material{ model: 'model' }
+
+  %item-craftmanship{ model: 'model' }
+  
+  %item-common{ model: 'model' }
+
+  %item-worn{ model: 'model' }
+
+  %item-weapon-common{ model: 'model', type: "{{ 'melee' }}" }
+
+  .form-group
+    %label
+      Missile type is
+    %span.label.label-primary
+      {{ model.weapon_stat.ranged_stat.missile_type }}
+
+  .form-group
+    %label
+      Ranges suitability (in order) is
+    %span.label.label-primary{ 'ng-repeat' => 'rangeSuitability in model.weapon_stat.ranged_stat.ranges_suitability' }
+      {{ rangeSuitability }}
+
+  .form-group
+    %label
+      It
+    %span.label.label-primary
+      {{ model.weapon_stat.ranged_stat.can_remain_loaded ? 'can' : 'cannot' }}
+    %label
+      remain loaded.
+
+  %item-containing-inventory{ model: 'model' }
+  
+  {{ model }}

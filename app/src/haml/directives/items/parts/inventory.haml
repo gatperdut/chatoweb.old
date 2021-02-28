@@ -1,0 +1,10 @@
+.form-group
+  %label{ 'ng-if' => '!model.inventory' }
+    It is not a container.
+  %label{ 'ng-if' => 'model.inventory' }
+    It is a container
+    %span{ 'ng-if' => 'model.inventory.lid' }
+      , it has a lid
+    %span{ 'ng-if' => 'model.inventory.lid.lock' }
+      and it has a lock
+    \.

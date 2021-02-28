@@ -1,0 +1,50 @@
+%div
+  .form-group
+    %button.btn.btn-xs.btn-primary.pull-right{ 'ng-click' => 'add.ingredient.one()' }
+      Add ingredient
+  %br
+  %br
+  .col-md-12.alert.alert-warning{ 'ng-if' => '!CraftIngredientUtilsService.filter(model.craft_ingredients).length' }
+    No ingredients added yet. Click on "Add ingredient" to start.
+
+  .well{ 'ng-repeat' => 'craftIngredient in model.craft_ingredients', 'ng-if' => '!craftIngredient._destroy' }
+    .row
+      .col-md-12
+        %span.badge.badge-success.pull-left
+          ${{ $index + 1}}
+        %button.btn.btn-xs.btn-danger.pull-right{ 'ng-click' => 'remove.ingredient.one($index)' }
+          %i.fa.fa-times
+      .col-md-2
+        .form-group
+          %label
+            Location
+          .btn-group.well.no-margin-bottom
+            %label.btn.btn-xs.btn-block.btn-success{ 'ng-model' => 'craftIngredient.location', 'ng-repeat' => 'location in ConstantsCache.storage.ingredients.locations', 'uib-btn-radio' => 'location' }
+              {{ location }}
+        .form-group.no-margin-bottom
+          %label
+            Use type
+          .btn-group.well.no-margin-bottom
+            %label.btn.btn-xs.btn-block.btn-success{ 'ng-model' => 'craftIngredient.usage_type', 'ng-repeat' => 'usageType in ConstantsCache.storage.ingredients.usage_types', 'uib-btn-radio' => 'usageType' }
+              {{ usageType }}
+      .col-md-10
+        %label
+          Possible item templates
+          %button.btn.btn-xs.btn-primary{ 'ng-click' => 'add.ingredient.itemTemplate(craftIngredient)' }
+            Add option (OR)
+        .well.no-margin-bottom
+          %div{ 'ng-repeat' => 'itemTemplate in craftIngredient.auxItemTemplates' }
+            %button.btn.btn-xs.btn-danger{ 'ng-click' => 'remove.ingredient.itemTemplate(craftIngredient, $index)'}
+              %i.fa.fa-times
+            %span.label.label-default{ 'style' => 'font-size: 15px;' }
+              {{ ItemTemplateUtilsService.title(itemTemplate) }}
+        .alert.alert-danger{ 'ng-if' => '!CraftValidityService.ingredient.materialTypeMatches(craftIngredient)' }
+          %input{ style: 'display: none;', type: 'number', 'ng-model' => 'zero', min: '1' }
+          The material types do not match.
+        .alert.alert-danger{ 'ng-if' => '!CraftValidityService.ingredient.present(craftIngredient)' }
+          %input{ style: 'display: none;', type: 'number', 'ng-model' => 'zero', min: '1' }
+          Pick at least one Item Template.
+        .form-group
+          %label
+            How many?
+          %input.input-sm.form-control{ type: 'number', 'ng-model' => 'craftIngredient.how_many', min: '1', step: 1, required: true }

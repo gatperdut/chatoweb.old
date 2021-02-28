@@ -1,0 +1,12 @@
+.modal-header
+  %h3.modal-title
+    Edit an Item Template
+
+.modal-body
+  .placeholder
+
+.modal-footer
+  %button.btn.btn-primary.pull-right{ 'ng-click' => 'submit()', 'ng-disabled' => 'form.$invalid' }
+    Update
+  %button.btn.btn-default.pull-left{ 'ng-click' => 'close()' }
+    Close

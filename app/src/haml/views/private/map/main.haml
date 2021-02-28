@@ -1,0 +1,114 @@
+.row
+  .col-md-8
+    .map-container
+      %vis-network{ data: 'MapUtilsService.buildData.data[MapService.level.current]', options: 'MapUtilsService.options', events: '{ selectNode: selectNode, selectEdge: selectEdge, doubleClick: edit, deselectNode: deselect.node, deselectEdge: deselect.edge, onload: networkLoaded }' }
+
+  .col-md-4
+    .well.row
+      %h4
+        Area selection
+      .row
+        .col-md-12
+          %ui-select{ 'ng-model' => 'AreaCache.selection.current', 'on-select' => 'AreaCache.selection.select.object($item)' }
+            %ui-select-match
+              {{ $select.selected.name }}
+            %ui-select-choices{ repeat: 'area in AreaCache.storage.areas' }
+              %span{ 'ng-bind-html' => "'' + area.name | highlight: $select.search" }
+
+      .row
+        .col-md-6
+          %button.btn.btn-default.btn-block{ 'ng-click' => 'area.create()' }
+            New area
+        .col-md-6
+          %button.btn.btn-success.btn-block{ 'ng-click' => 'area.edit()' }
+            Edit area
+
+      .row
+        %h4.text-center
+          %span.label.label-primary
+            Superarea: {{ SuperareaUtilsService.title(AreaCache.selection.superarea()) }}
+
+      .row
+        .col-md-6
+          %button.btn.btn-default.btn-block{ 'ng-click' => 'superarea.create()' }
+            New superarea
+        .col-md-6
+          %button.btn.btn-success.btn-block{ 'ng-click' => 'superarea.edit()' }
+            Edit superarea
+
+      .row
+        %h4.text-center
+          %button.btn.btn-default{ 'ng-click' => 'superarea.visible.toggle()' }
+            %span{ 'ng-if' => 'superarea.visible.status' }
+              Hide superareas
+            %span{ 'ng-if' => '!superarea.visible.status' }
+              Show superareas
+        .col-md-6.text-center{ 'ng-show' => 'superarea.visible.status', 'ng-repeat' => 'sa in SuperareaCache.storage.superareas' }
+          %h4
+            %span.label.label-primary
+              {{ SuperareaUtilsService.title(sa) }}
+
+    .well.row
+      %h4
+        Level {{ MapService.level.current }} [{{ MapUtilsService.buildData.level.lowest }} to {{ MapUtilsService.buildData.level.highest }}]
+        %button.btn.btn-default{ 'ng-click' => 'MapService.level.up()' }
+          %i.fa.fa-2x.fa-caret-square-o-up
+        %button.btn.btn-default{ 'ng-click' => 'MapService.level.down()' }
+          %i.fa.fa-2x.fa-caret-square-o-down
+
+    .well.row{ 'ng-if' => 'MapService.selection.is.room() && MapService.selection.data' }
+      %h4
+        {{ RoomUtilsService.title(MapService.selection.data) }}
+
+
+
+      .row
+        .col-md-6{ 'ng-repeat' => 'dir in DirectionsService.list.all' }
+          %button.btn.btn-default.btn-block{ 'ng-if' => '!RoomUtilsService.connection(MapService.selection.data, dir) && !MapUtilsService.find.node.coordinates(MapService.selection.data, dir)', 'ng-click' => 'room.create(dir, MapService.selection.data.id)' }
+            Create room {{ dir }}
+          %button.btn.btn-warning.btn-block{ 'ng-if' => 'RoomUtilsService.connection(MapService.selection.data, dir)', 'ng-click' => 'room.disconnect(MapService.selection.data, dir)', 'ng-disabled' => '!MapUtilsService.can.disconnect(MapService.selection.data, dir)' }
+            Disconnect {{ dir }}
+          %button.btn.btn-success.btn-block{ 'ng-if' => '!RoomUtilsService.connection(MapService.selection.data, dir) && MapUtilsService.find.node.coordinates(MapService.selection.data, dir)', 'ng-click' => 'room.connect(MapService.selection.data, dir)' }
+            Connect {{ dir }}
+        .col-md-6.col-md-offset-6
+          %button.btn.btn-danger.btn-block{ 'ng-click' => 'room.remove(MapService.selection.data)', 'ng-disabled' => '!MapUtilsService.can.remove(MapService.selection.data)' }
+            Remove room
+
+      .row
+        .col-md-6{ 'ng-repeat' => 'dir in DirectionsService.list.all' }
+          %button.btn.btn-default.btn-block{ 'ng-if' => "!RoomUtilsService.doorConnection(MapService.selection.data, dir) && !MapUtilsService.find.edge.between(MapService.selection.data.id, RoomUtilsService.connection(MapService.selection.data, dir)).door", 'ng-click' => "door.create.direction(MapService.selection.data, dir)", 'ng-disabled' => "!RoomUtilsService.connection(MapService.selection.data, dir)" }
+            Create door {{ dir }}
+          %button.btn.btn-danger.btn-block{ 'ng-if' => 'RoomUtilsService.doorConnection(MapService.selection.data, dir) || MapUtilsService.find.edge.between(MapService.selection.data.id, RoomUtilsService.connection(MapService.selection.data, dir)).door', 'ng-click' => 'door.remove.direction(MapService.selection.data, dir)' }
+            Remove door {{ dir }}
+        .col-md-6{ 'ng-repeat' => 'dir in DirectionsService.list.interLevel' }
+          %button.btn.btn-success.btn-block{ 'ng-click' => 'door.edit(MapService.selection.data, dir)', 'ng-disabled' => '!RoomUtilsService.doorConnection(MapService.selection.data, dir) && !MapUtilsService.find.edge.between(MapService.selection.data.id, RoomUtilsService.connection(MapService.selection.data, dir)).door' }
+            Edit door {{ dir }}
+
+      %br
+      .row
+        %h4.text-center
+          %span.label{ 'ng-class' => "{ 'label-default': !MapUtilsService.find.room.id(RoomUtilsService.connection(MapService.selection.data, 'u')), 'label-primary': MapUtilsService.find.room.id(RoomUtilsService.connection(MapService.selection.data, 'u')) }" }
+            Room Above: {{ MapUtilsService.find.room.id(RoomUtilsService.connection(MapService.selection.data, 'u')).title || 'none' }}
+        %h4.text-center
+          %span.label{ 'ng-class' => "{ 'label-default': !MapUtilsService.find.room.id(RoomUtilsService.connection(MapService.selection.data, 'd')), 'label-primary': MapUtilsService.find.room.id(RoomUtilsService.connection(MapService.selection.data, 'd')) }" }
+            Room Below: {{ MapUtilsService.find.room.id(RoomUtilsService.connection(MapService.selection.data, 'd')).title || 'none' }}
+
+
+      %br
+      .row
+        .col-md-6{ 'ng-repeat' => 'dir in DirectionsService.list.all' }
+          %button.btn.btn-success.btn-block{ 'ng-if' => 'RoomUtilsService.connection(MapService.selection.data, dir)', 'ng-click' => 'transition.follow(MapService.selection.data, dir)', 'ng-disabled' => 'MapUtilsService.find.room.id(RoomUtilsService.connection(MapService.selection.data, dir))' }
+            Transition area {{ dir }}
+
+          %button.btn.btn-default.btn-block{ 'ng-if' => '!RoomUtilsService.connection(MapService.selection.data, dir)', 'ng-click' => 'transition.create(MapService.selection.data, dir)' }
+            Create transition {{ dir }}
+
+    .well.row{ 'ng-if' => 'MapService.selection.is.edge() && MapService.selection.data' }
+      %h4.text-center{ 'ng-if' => '!MapService.selection.data.door' }
+        No door present
+        %button.btn.btn-default.btn-block{ 'ng-click' => 'door.create.edge(MapService.selection.data)' }
+          Add door
+      %h4.text-center{ 'ng-if' => 'MapService.selection.data.door' }
+        {{ MapService.selection.data.door.long_desc }}
+        %button.btn.btn-danger.btn-block{ 'ng-click' => 'door.remove.edge(MapService.selection.data)' }
+          Remove door

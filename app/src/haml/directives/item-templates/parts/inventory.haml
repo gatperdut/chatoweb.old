@@ -1,0 +1,12 @@
+%div
+  .form-group
+    %button.btn.btn-primary{ type: 'button', 'ng-model' => 'model.inv.present', 'uib-btn-checkbox' => '', 'ng-change' => 'toggle.inventory()' }
+      Is this a container?
+  
+  .form-group
+    %button.btn.btn-primary{ type: 'button', 'ng-model' => 'model.inv.lid.present',  'uib-btn-checkbox' => '', 'ng-change' => 'toggle.lid()', 'ng-disabled' => '!model.inv.present' }
+      Does it have a lid?
+
+  .form-group
+    %button.btn.btn-primary{ type: 'button', 'ng-model' => 'model.inv.lid.lock.present',  'uib-btn-checkbox' => '', 'ng-change' => 'toggle.lock()', 'ng-disabled' => '!model.inv.lid.present' }
+      Does it have a lock?

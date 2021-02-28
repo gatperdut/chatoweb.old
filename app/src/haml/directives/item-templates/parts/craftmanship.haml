@@ -1,0 +1,10 @@
+%div
+  .form-group
+    %label
+      Can it have different qualities?
+    %div
+      .btn-group
+        %label.btn.btn-success{ 'ng-model' => 'model.variable_set_template.has_craftmanship', 'uib-btn-radio' => 'true', required: true }
+          Yes
+        %label.btn.btn-success{ 'ng-model' => 'model.variable_set_template.has_craftmanship', 'uib-btn-radio' => 'false', required: true }
+          No

@@ -1,0 +1,13 @@
+.form-group
+
+  %label
+    Search an item template by id or description:
+
+  %ui-select.ui-select-default{ 'ng-model' => 'aux.model', required: true, 'on-select' => 'select()' }
+
+    %ui-select-match{ placeholder: 'Type to search ...' }
+      %span{ 'ng-if' => 'aux.model' }
+        {{ ItemTemplateUtilsService.title(aux.model) }}
+
+    %ui-select-choices{ repeat: 'it in aux.list', refresh: 'query($select.search)', 'refresh-delay' => '500' }
+      %span{ 'ng-bind-html' => "'' + ItemTemplateUtilsService.title(it) | highlight: $select.search" }

@@ -1,0 +1,30 @@
+.modal-header
+  %h3.modal-title
+    Create an Item Template
+
+.modal-body
+  %uib-tabset{ active: 'activeTab' }
+    %uib-tab{ heading: 'Plain', index: "'plain'" }
+      %form{ name: 'form.plain' }
+        %item-template-plain{ model: 'model.plain' }
+    %uib-tab{ heading: 'Armor', index: "'armor'" }
+      %form{ name: 'form.armor' }
+        %item-template-armor{ model: 'model.armor' }
+    %uib-tab{ heading: 'Melee', index: "'melee'" }
+      %form{ name: 'form.melee' }
+        %item-template-melee{ model: 'model.melee' }
+    %uib-tab{ heading: 'Ranged', index: "'ranged'" }
+      %form{ name: 'form.ranged' }
+        %item-template-ranged{ model: 'model.ranged' }
+    %uib-tab{ heading: 'Edible', index: "'edible'" }
+      %form{ name: 'form.edible' }
+        %item-template-edible{ model: 'model.edible' }
+    %uib-tab{ heading: 'Vessel', index: "'vessel'" }
+      %form{ name: 'form.vessel' }
+        %item-template-vessel{ model: 'model.vessel' }
+
+.modal-footer
+  %button.btn.btn-primary.pull-right{ 'ng-click' => 'submit()', 'ng-disabled' => 'form[activeTab].$invalid' }
+    Create
+  %button.btn.btn-default.pull-left{ 'ng-click' => 'close()' }
+    Close

@@ -1,0 +1,10 @@
+.form-group
+  %label
+    Can it be worn anywhere?
+  %i{ 'ng-if' => 'mandatory' }
+    Select one at least.
+  %div
+    .btn-group
+      %label.btn.btn-success{ 'ng-model' => 'slotsAux[slot]', 'ng-repeat' => 'slot in ConstantsCache.storage.armorInfo.slots', 'uib-btn-checkbox' => '' }
+        {{ slot }}
+      %input{ style: 'display: none;', type: 'number', 'ng-model' => 'zero', min: '1', 'ng-if' => 'mandatory && !model.possible_slots.length' }

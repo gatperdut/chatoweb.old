@@ -1,0 +1,10 @@
+%topbar
+
+.cm-wrapper
+
+  %sidebar
+
+  .container-fluid.cm-container-fluid{ 'ng-class' => '{ expanded: !InterfaceService.sidebar.active }' }
+    .row
+      .container-fluid.cm-container
+        .row{ 'ui-view' => '' }

@@ -1,0 +1,23 @@
+.row
+  .col-md-4.col-md-offset-4
+
+    %h4.text-center
+      Login
+
+    %form{ name: 'form', 'ng-submit' => 'submit()' }
+
+      .form-group
+        %label
+          Your username:
+        %input.form-control{ type: 'text', 'alphanumerical-input' => '', required: true, 'ng-model' => 'player.username', 'ng-trim' => 'false' }
+
+      .form-group
+        %label
+          Your password:
+        %input.form-control{ type: 'password', 'alphanumerical-input' => '', required: true, 'ng-model' => 'player.password', 'ng-trim' => 'false' }
+
+      %button.btn.btn-primary.pull-right{ type: 'submit', 'ng-disabled' => 'form.$invalid' }
+        Login
+
+    %a.text-center{ href: '', 'ng-click' => 'InterfaceService.goTo.public.signup()' }
+      Create an account here.

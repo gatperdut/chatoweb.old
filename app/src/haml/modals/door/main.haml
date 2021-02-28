@@ -1,0 +1,40 @@
+.modal-header
+  %h3.modal-title
+    Door
+
+.modal-body
+  %form{ name: 'form', 'ng-submit' => 'submit()' }
+
+    .form-group
+      %label
+        Short description ("door", "gate"):
+      %input.form-control{ type: 'text', required: true, 'ng-model' => 'door.short_desc' }
+
+    .form-group
+      %label
+        Long description ("an ornated wooden gate"):
+      %input.form-control{ type: 'text', required: true, 'ng-model' => 'door.long_desc' }
+
+    .form-group
+      %label
+        Description (what is shown when looking at it):
+      %textarea.form-control{ type: 'text', rows: '5', 'ng-model' => 'door.full_desc', required: true }
+
+    .form-group
+      %label
+        Can it be seen through?
+      %div
+        .btn-group
+          %label.btn.btn-success{ 'ng-model' => 'door.see_through', 'uib-btn-radio' => 'true' }
+            Yes
+          %label.btn.btn-success{ 'ng-model' => 'door.see_through', 'uib-btn-radio' => 'false' }
+            No
+
+    {{ door }}
+
+.modal-footer
+  %button.btn.btn-primary.pull-right{ 'ng-click' => 'submit()', 'ng-disabled' => 'form.$invalid' }
+    %span{ 'ng-if' => 'door.id' }
+      Update
+    %span{ 'ng-if' => '!door.id' }
+      Create

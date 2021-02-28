@@ -1,0 +1,52 @@
+%nav.navbar.navbar-default.navbar-fixed-top
+  .container-fluid
+    .navbar-header
+      %button.navbar-toggle.collapsed{ 'aria-expanded' => 'false', 'data-target' => '#cm-topbar', 'data-toggle' => 'collapse', :type => 'button' }
+        %span.sr-only
+          Toggle navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      %a.navbar-brand{ href: '' }
+        %img{ src: 'assets/images/favicon.ico' }
+      %a.navbar-brand{ href: '' }
+        %button.btn.btn-primary{ type: 'button', 'ng-click' => 'InterfaceService.sidebar.toggle()' }
+          %i.fa.fa-2x.fa-align-left
+
+    #cm-topbar.collapse.navbar-collapse
+      %ul.nav.navbar-nav
+        %li{ 'ng-class' => '{ active: InterfaceService.isIn.home() }' }
+          %a{ href: '', 'ng-click' => 'InterfaceService.goTo.home()' }
+            Home
+        %li{ 'ng-class' => '{ active: InterfaceService.isIn.documentation() }' }
+          %a{ href: '', 'ng-click' => 'InterfaceService.goTo.documentation()' }
+            Documentation
+        %li{ 'ng-class' => '{ active: InterfaceService.isIn.itemTemplates() }', 'ng-if' => 'showLinks()' }
+          %a{ href: '', 'ng-click' => 'InterfaceService.goTo.itemTemplates()' }
+            Item templates
+        %li{ 'ng-class' => '{ active: InterfaceService.isIn.items() }', 'ng-if' => 'showLinks()' }
+          %a{ href: '', 'ng-click' => 'InterfaceService.goTo.items()' }
+            Items
+        %li{ 'ng-class' => '{ active: InterfaceService.isIn.crafts() }', 'ng-if' => 'showLinks()' }
+          %a{ href: '', 'ng-click' => 'InterfaceService.goTo.crafts()' }
+            Crafts
+        %li{ 'ng-class' => '{ active: InterfaceService.isIn.characters() }', 'ng-if' => 'showLinks()' }
+          %a{ href: '', 'ng-click' => 'InterfaceService.goTo.characters()' }
+            Characters
+        %li{ 'ng-class' => '{ active: InterfaceService.isIn.map() }', 'ng-if' => 'showLinks()' }
+          %a{ href: '', 'ng-click' => 'InterfaceService.goTo.map()' }
+            Map
+        %li
+          %a{ href: 'http://ardamarred.freeforums.net/', target: '_blank' }
+            Forums
+            
+      %ul.nav.navbar-nav.navbar-right
+        %li
+          %a
+            {{ username() }}
+        %li
+          %a
+            %button.btn.btn-xs.btn-default{ 'ng-click' => 'InterfaceService.goTo.public.login()', 'ng-if' => '!AuthService.isAuthenticated()' }
+              Login
+            %button.btn.btn-xs.btn-default{ 'ng-click' => 'AuthService.logout()', 'ng-if' => 'AuthService.isAuthenticated()' }
+              Logout

@@ -1,0 +1,21 @@
+%div
+
+  .form-group{ 'ng-if' => 'is.melee()' }
+    %label
+      Grip:
+    %div
+      .btn-group
+        %label.btn.btn-success{ 'ng-model' => 'model.weapon_stat_template.grip', 'ng-repeat' => 'grip in ConstantsCache.storage.weaponInfo.grips', 'uib-btn-radio' => 'grip' }
+          {{ grip }}
+  .form-group{ 'ng-if' => 'is.ranged()' }
+    %label
+      The grip for ranged weapons is two-handed.
+
+  .form-group
+    %label
+      Base:
+    %ui-select{ 'ng-model' => 'model.weapon_stat_template.base' }
+      %ui-select-match
+        {{ $select.selected }}
+      %ui-select-choices{ repeat: "base as base in ConstantsCache.storage.weaponInfo[type + '_bases']" }
+        %span{ 'ng-bind-html' => "'' + base | highlight: $select.search" }

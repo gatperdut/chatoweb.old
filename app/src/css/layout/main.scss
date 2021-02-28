@@ -1,0 +1,30 @@
+.cm-wrapper {
+  display: flex;
+  align-items: stretch;
+}
+
+.cm-container-fluid {
+  margin-top: 60px;
+  transition: all 0.3s;
+  margin-left: 250px;
+  width: 100%;
+
+  &.expanded {
+    margin-left: 15px !important;
+  }
+}
+
+.cm-container {
+  margin-left: 25px;
+  margin-right: 25px;
+}
+
+@media (max-width: 768px) {
+  .cm-container-fluid {
+    margin-left: 15px !important;
+    margin-right: 15px !important;
+  }
+  .cm-container {
+    margin-left: 0 !important;
+  }
+}

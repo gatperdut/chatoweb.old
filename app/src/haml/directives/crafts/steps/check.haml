@@ -1,0 +1,48 @@
+.form-group
+  %label
+    Does this step involve a skill check?
+  %div
+    .btn-group
+      %label.btn.btn-success{ 'ng-model' => 'craftStep.hasTest', 'uib-btn-radio' => 'true', 'ng-change' => 'toggle.craftStep.hasTest(craftStep)', required: true }
+        Yes
+      %label.btn.btn-success{ 'ng-model' => 'craftStep.hasTest', 'uib-btn-radio' => 'false', 'ng-change' => 'toggle.craftStep.hasTest(craftStep)', required: true }
+        No
+%div{ 'ng-if' => 'craftStep.hasTest' }
+  .form-group
+    %label
+      Failure echo 1st. person ("You mess up.")
+    %input.form-control{ type: 'text', required: true, 'ng-disabled' => '!craftStep.hasTest', 'ng-model' => 'craftStep.fail_first' }
+  .form-group
+    %label
+      Failure echo 3rd. person ("$crafter messes up.")
+    %input.form-control{ type: 'text', required: true, 'ng-disabled' => '!craftStep.hasTest', 'ng-model' => 'craftStep.fail_third' }
+  .alert.alert-danger{ 'ng-if' => '!CraftValidityService.echo.indexReferences.none(craftStep)' }
+    %input{ style: 'display: none;', type: 'number', 'ng-model' => 'zero', min: '1' }
+    Failure echoes cannot have ingredient references.
+  .alert.alert-danger{ 'ng-if' => "!CraftValidityService.echo.noCrafterOrPronounPresent(craftStep, 'fail_first')" }
+    %input{ style: 'display: none;', type: 'number', 'ng-model' => 'zero', min: '1' }
+    1st. person failure echo may have neither
+    %i
+      $crafter
+    nor
+    %i
+      $pronoun
+    references.
+  .alert.alert-danger{ 'ng-if' => "!CraftValidityService.echo.crafterPresent(craftStep, 'fail_third')" }
+    %input{ style: 'display: none;', type: 'number', 'ng-model' => 'zero', min: '1' }
+    3rd. person failure echo needs to have a single $crafter reference (and $pronoun optionally).
+  .row
+    .col-md-6
+      .form-group
+        %label
+          Tested skill:
+        %ui-select{ 'ng-model' => 'craftStep.craft_test.skill' }
+          %ui-select-match
+            {{ $select.selected }}
+          %ui-select-choices{ repeat: 'skill as skill in ConstantsCache.storage.skills.all' }
+            %span{ 'ng-bind-html' => "'' + skill | highlight: $select.search" }
+    .col-md-6
+      .form-group
+        %label
+          Modifier [-90 to +90] (positive means easier):
+        %input.form-control{ type: 'number', 'ng-model' => 'craftStep.craft_test.modifier', min: '-90', max: '90', step: 1, required: true }

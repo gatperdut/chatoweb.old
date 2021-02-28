@@ -1,0 +1,16 @@
+%form{ name: 'form', 'ng-submit' => 'submit()' }
+
+  %item-template-material-type{ model: 'model', type: "{{ 'melee' }}", mandatory: 'true' }
+  
+  %item-template-common{ model: 'model' }
+
+  %item-template-worn{ model: 'model', mandatory: 'false' }
+
+  %item-template-weapon-common{ model: 'model', type: "{{ 'melee' }}" }
+
+  .form-group
+    %label
+      Sheathed description ("a dagger"):
+    %input.form-control{ type: 'text', required: true, 'ng-model' => 'model.weapon_stat_template.melee_stat_template.sheathed_desc' }
+
+  {{ model }}

@@ -1,0 +1,13 @@
+%form{ name: 'form', 'ng-submit' => 'submit()' }
+
+  %item-template-material-type{ model: 'model', type: "{{ 'general' }}", mandatory: 'false' }
+  
+  %item-template-craftmanship{ model: 'model' }
+
+  %item-template-common{ model: 'model' }
+
+  %item-template-worn{ model: 'model', mandatory: 'false' }
+
+  %item-template-inventory{ model: 'model' }
+
+  {{ model }}

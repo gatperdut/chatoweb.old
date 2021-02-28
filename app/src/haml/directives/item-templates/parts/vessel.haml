@@ -1,0 +1,21 @@
+%form{ name: 'form', 'ng-submit' => 'submit()' }
+  
+  %item-template-common{ model: 'model' }
+
+  %item-template-worn{ model: 'model', mandatory: 'false' }
+
+  .form-group
+    %label
+      Number of gulps per unit:
+    %item-template-stack{ model: 'model.drink' }
+
+  .form-group
+    %label
+      Type of fluid:
+    %ui-select{ 'ng-model' => 'model.drink.fluid' }
+      %ui-select-match
+        {{ $select.selected }}
+      %ui-select-choices{ repeat: 'fluid as fluid in ConstantsCache.storage.fluids' }
+        %span{ 'ng-bind-html' => "'' + fluid | highlight: $select.search" }
+  
+  {{ model }}

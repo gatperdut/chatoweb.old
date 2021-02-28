@@ -1,0 +1,64 @@
+%div
+  
+  .form-group
+    %label
+      Base is
+    %span.label.label-primary
+      {{ model.armor_stat.base }}
+
+  .form-group
+    %label
+      Material type is
+    %span.label.label-primary
+      {{ model.variable_set.material_type }}
+
+  %item-material{ model: 'model' }
+
+  %item-craftmanship{ model: 'model' }
+
+  %item-common{ model: 'model' }
+
+  %item-worn{ model: 'model' }
+
+  .form-group
+    %label
+      The ranged attack impediment is
+    %span.label.label-primary
+      {{ model.armor_stat.ranged_attack_impediment }}
+
+  .form-group
+    %label
+      The maneuver impediment is
+    %span.label.label-primary
+      {{ model.armor_stat.maneuver_impediment }}
+
+  .form-group
+    %label
+      The armor class is
+    %span.label.label-primary
+      {{ model.armor_stat.level }}
+    %span.label{ 'ng-class' => "{ 'label-danger': model.armor_stat.level_mod < 0, 'label-success': model.armor_stat.level_mod > 0 }", 'ng-if' => 'model.armor_stat.level_mod' }
+      {{ model.armor_stat.level_mod }}
+
+  .form-group
+    %label
+      Roll modifier is
+    %span.label{ 'ng-class' => "{ 'label-primary': !model.armor_stat.roll_mod, 'label-danger': model.armor_stat.roll_mod > 0, 'label-success': model.armor_stat.roll_mod < 0 }" }
+      {{ model.armor_stat.roll_mod}}
+
+  .form-group
+    %label
+      Critical modifier is
+    %span.label{ 'ng-class' => "{ 'label-primary': !model.armor_stat.critical_mod, 'label-danger': model.armor_stat.critical_mod > 0, 'label-success': model.armor_stat.critical_mod < 0 }" }
+      {{ model.armor_stat.critical_mod}}
+
+  .form-group
+    %label
+      It covers ...
+    %div
+      %span.label.label-primary{ 'ng-repeat' => 'bodyPart in model.armor_stat.body_parts' }
+        {{ bodyPart }}
+
+  %item-containing-inventory{ model: 'model' }
+
+  {{ model }}

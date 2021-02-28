@@ -1,0 +1,16 @@
+.modal-header
+  %h3.modal-title
+    Pick an Item Template
+
+.modal-body
+  %form.row{ name: 'form' }
+    .col-md-12
+      %item-template-picker{ model: 'model' }
+
+  {{ model }}
+
+.modal-footer
+  %button.btn.btn-primary.pull-right{ 'ng-disabled' => 'form.$invalid', 'ng-click' => 'submit()' }
+    Pick
+  %button.btn.btn-default.pull-left{ 'ng-click' => 'close()' }
+    Close

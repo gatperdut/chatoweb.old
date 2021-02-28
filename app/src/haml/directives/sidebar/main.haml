@@ -1,0 +1,45 @@
+.cm-wrapper
+
+  %nav.sidebar{ 'ng-class' => '{ active: InterfaceService.sidebar.active }' }
+    .sidebar-header
+      %h3.text-center
+        Arda Marred
+
+    %ul.list-unstyled.components
+      %li
+        %a{ 'aria-expanded' => 'false', 'data-toggle' => 'collapse', :href => '.codesubmenu'}
+          Code
+          %i.fa.fa-angle-double-down
+        %ul.codesubmenu.collapse.list-unstyled
+          %li
+            %a{ href: 'https://github.com/chatomud', target: '_blank' }
+              Github page
+          %li
+            %a{ href: 'https://github.com/chatomud/chatomud/blob/master/README.md', target: '_blank' }
+              Mud setup
+          %li
+            %a{ href: 'https://github.com/chatomud/chatoweb/blob/master/README.md', target: '_blank' }
+              Webclient setup
+
+      %li
+        %a{ 'aria-expanded' => 'false', 'data-toggle' => 'collapse', :href => '.report-issue-submenu'}
+          Report an issue
+          %i.fa.fa-angle-double-down
+        %ul.report-issue-submenu.collapse.list-unstyled
+          %li
+            %a{ href: 'https://github.com/chatomud/chatomud/issues/new', target: '_blank' }
+              Mud
+          %li
+            %a{ href: 'https://github.com/chatomud/chatoweb/issues/new', target: '_blank' }
+              Webclient
+
+      %li
+        %a{ href: 'https://github.com/chatomud/chatomud/wiki', target: '_blank' }
+          Wiki
+
+    .well.box
+      {{ SystemService.storage.info.time_string }}
+    .well.box.revision
+      Current revision {{ SystemService.storage.info.git_revision }}
+    .well.box
+      ardamarred.com port 1234

@@ -1,0 +1,22 @@
+.modal-header
+  %h3.modal-title
+    %span{ 'ng-if' => '!copy.id' }
+      Create Superarea
+    %span{ 'ng-if' => 'copy.id' }
+      Edit Superarea
+
+.modal-body
+  %form{ name: 'form', 'ng-submit' => 'submit()' }
+    .form-group
+      %label
+        Name of the Superarea:
+      %input.form-control{ type: 'text', required: true, 'ng-model' => 'copy.name' }
+
+  {{ copy }}
+.modal-footer
+  %button.btn.btn-primary.pull-right{ 'ng-click' => 'submit()', 'ng-disabled' => 'form.$invalid' }
+    %span
+    %span{ 'ng-if' => '!copy.id' }
+      Create
+    %span{ 'ng-if' => 'copy.id' }
+      Update

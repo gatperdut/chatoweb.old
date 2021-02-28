@@ -1,0 +1,34 @@
+%div
+  .form-group
+    %label
+      Short description ("an object"):
+    %input.form-control{ type: 'text', required: true, 'ng-model' => 'model.short_desc' }
+    .alert.alert-danger.text-center{ 'ng-if' => 'missing.any(model.short_desc)' }
+      %input{ style: 'display: none;', type: 'number', 'ng-model' => 'zero', min: '1' }
+      Needs to include
+      %i
+        {{ missing.names(model.short_desc) }}
+  .form-group
+    %label
+      Long description ("An object is on the ground."):
+    %input.form-control{ type: 'text', required: true, 'ng-model' => 'model.long_desc' }
+    .alert.alert-danger.text-center{ 'ng-if' => 'missing.any(model.long_desc)' }
+      %input{ style: 'display: none;', type: 'number', 'ng-model' => 'zero', min: '1' }
+      Needs to include
+      %i
+        {{ missing.names(model.long_desc) }}
+
+  .form-group
+    %label
+      Full description (what is shown when looking at it):
+    %textarea.form-control{ type: 'text', rows: '5', 'ng-model' => 'model.full_desc', 'required' => '' }
+    .alert.alert-danger.text-center{ 'ng-if' => 'missing.any(model.full_desc)' }
+      %input{ style: 'display: none;', type: 'number', 'ng-model' => 'zero', min: '1' }
+      Needs to include
+      %i
+        {{ missing.names(model.full_desc) }}
+
+  .form-group
+    %label
+      Keywords (3 characters each at least):
+    %tags-input{ 'ng-model' => 'model.kwords', 'add-on-paste' => 'true', 'replace-spaces-with-dashes' => 'false', 'add-on-space' => 'true', 'use-strings' => 'true', 'min-tags' => 1 }

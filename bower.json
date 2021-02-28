@@ -1,0 +1,33 @@
+{
+  "name": "chato_web",
+  "description": "The Chato frontend app",
+  "main": "gulpfile.js",
+  "license": "ISC",
+  "moduleType": [],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "dependencies": {
+    "angular": "~1.6.9",
+    "angular-bootstrap": "~2.5.0",
+    "angular-cookies": "~1.6.9",
+    "angularjs-slider": "~6.5.1",
+    "angular-ui-router": "~1.0.15",
+    "angular-resource": "~1.6.9",
+    "angular-ui-notification": "~0.3.6",
+    "angular-ui-select": "0.19.8",
+    "angular-sanitize": "1.6.9",
+    "angular-drag-and-drop-lists": "2.1.0",
+    "socket.io-client": "1.7.4",
+    "angular-socket-io": "0.7.0",
+    "angular-visjs": "4.16.0",
+    "ng-tags-input": "~3.2.0",
+    "bootstrap-sass": "~3.3.7",
+    "components-font-awesome": "~4.6.3",
+    "underscore": "~1.8.3",
+    "moment": "~2.21.0"
+  }
+}

@@ -1,0 +1,10 @@
+%div{ 'ng-show' => 'model.variable_set.material_type' }
+  .form-group
+    %label
+      Which material?
+    %i
+      Select one. Will reset descriptions.
+    %div
+      .btn-group
+        %label.btn.btn-success{ 'ng-model' => 'model.variable_set.material', 'ng-repeat' => 'material in ConstantsCache.storage.materials[model.variable_set.material_type]', 'uib-btn-radio' => 'material', 'ng-change' => 'change()', 'ng-required' => 'model.variable_set.material_type' }
+          {{ material }}

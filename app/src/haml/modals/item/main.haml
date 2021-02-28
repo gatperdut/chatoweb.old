@@ -1,0 +1,13 @@
+.modal-header
+  %h3.modal-title
+    Create an Item
+
+.modal-body
+  %form{ name: 'form' }
+    %item{ 'model' => 'model' }
+
+.modal-footer
+  %button.btn.btn-primary.pull-right{ 'ng-click' => 'submit()', 'ng-disabled' => 'form.$invalid' }
+    Create
+  %button.btn.btn-default.pull-left{ 'ng-click' => 'close()' }
+    Close

@@ -1,0 +1,11 @@
+.form-group
+  %label
+    Search room to spawn it in by id or title:
+  %ui-select.ui-select-default{ 'ng-model' => 'model.containing_inventory_id', 'on-select' => 'select($item)', required: true }
+    %ui-select-match{ placeholder: 'Type to search ...' }
+      %span{ 'ng-if' => 'selected' }
+        {{ RoomUtilsService.title(selected) }}
+    %ui-select-choices{ repeat: 'r.inventory.id as r in rooms', refresh: 'query($select.search)', 'refresh-delay' => '500' }
+      %span{ 'ng-bind-html' => "'' + RoomUtilsService.title(r) | highlight: $select.search" }
+    %img.loader-img{ src: 'assets/images/loader.gif', 'ng-show' => 'busy' }
+  

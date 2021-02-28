@@ -1,0 +1,6 @@
+.form-group
+  %label{ 'ng-if' => 'model' }
+    Amount in the stack:
+  %input.form-control{ type: 'text', 'ng-model' => 'model.max', 'ng-change' => 'change()', 'integer-input' => '', required: 'true', 'ng-if' => 'model' }
+  %label{ 'ng-if' => '!model' }
+    This item is not stackable

@@ -1,0 +1,38 @@
+.row
+  .col-md-9
+    .form-group
+      %label
+        Echo 1st. person ("You do something with $1, $2 and $3.")
+      %input.form-control{ type: 'text', required: true, 'ng-model' => 'craftStep.echo_first' }
+  .col-md-3
+    .form-group
+      %label
+        Delay (min. 5 secs):
+      %input.form-control{ type: 'number', min: '5', required: true, 'integer-input' => '', 'ng-model' => 'craftStep.delay' }
+  .col-md-9
+    .form-group
+      %label
+        Echo 3rd. person ("$crafter does something with $1, $2 and $3.")
+      %input.form-control{ type: 'text', required: true, 'ng-model' => 'craftStep.echo_third' }
+.alert.alert-danger{ 'ng-if' => 'CraftValidityService.echo.indexReferences.noneInvalid(craftStep).length' }
+  %input{ style: 'display: none;', type: 'number', 'ng-model' => 'zero', min: '1' }
+  Invalid references: {{ CraftValidityService.echo.indexReferences.noneInvalid(craftStep).join(', ') }}
+.alert.alert-danger{ 'ng-if' => '!CraftValidityService.echo.indexReferences.same(craftStep)' }
+  %input{ style: 'display: none;', type: 'number', 'ng-model' => 'zero', min: '1' }
+  Both echoes need to have the same $n references.
+.alert.alert-danger{ 'ng-if' => "!CraftValidityService.echo.crafterPresent(craftStep, 'echo_third')" }
+  %input{ style: 'display: none;', type: 'number', 'ng-model' => 'zero', min: '1' }
+  3rd. person echo needs to have a single $crafter reference (and $pronoun optionally).
+.alert.alert-danger{ 'ng-if' => "!CraftValidityService.echo.noCrafterOrPronounPresent(craftStep, 'echo_first')" }
+  %input{ style: 'display: none;', type: 'number', 'ng-model' => 'zero', min: '1' }
+  1st. person echo echo may have neither
+  %i $crafter
+  nor
+  %i $pronoun
+  references.
+.alert.alert-danger{ 'ng-if' => '!CraftValidityService.echo.indexReferences.withinBounds(model, craftStep)' }
+  %input{ style: 'display: none;', type: 'number', 'ng-model' => 'zero', min: '1' }
+  Some of the references point to non-existent ingredients.
+.alert.alert-danger{ 'ng-if' => '!CraftValidityService.echo.indexReferences.nonRepeat.withinStep(craftStep)' }
+  %input{ style: 'display: none;', type: 'number', 'ng-model' => 'zero', min: '1' }
+  Some of the references appear more than within each echo.

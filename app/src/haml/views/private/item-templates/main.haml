@@ -1,0 +1,26 @@
+.row
+  .col-md-12
+    %h2
+      Item templates
+      %button.btn.btn-success.pull-right{ 'ng-click' => 'create.itemTemplate()' }
+        Create item templates
+
+  .col-md-12
+    .well.row
+      %div{ 'ng-if' => '!ItemTemplateCache.presence.any()' }
+        No item templates present yet.
+
+      %div{ 'ng-if' => 'ItemTemplateCache.presence.any()' }
+        %ul.list-unstyled
+          %li.col-md-4{ 'ng-repeat' => 'itemTemplate in ItemTemplateCache.storage.itemTemplates' }
+            %button.btn.btn-danger.btn-xs{ 'ng-click' => 'remove(itemTemplate)' }
+              %i.fa.fa-times
+            %button.btn.btn-success.btn-xs{ 'ng-click' => 'edit(itemTemplate)' }
+              %i.fa.fa-edit
+            %button.btn.btn-default.btn-xs{ 'ng-click' => 'create.item(itemTemplate)' }
+              %i.fa.fa-plus-circle
+            %span.label.label-primary
+              {{ itemTemplate.short_desc }}
+            %span.label.label-default
+              {{ itemTemplate.code }}
+

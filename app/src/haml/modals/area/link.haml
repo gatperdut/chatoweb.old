@@ -1,0 +1,41 @@
+.modal-header
+  %h3.modal-title
+    Link Areas
+
+.modal-body
+  %h4
+    Create a new area or choose an existing one?
+
+  %uib-tabset{ active: 'activeTab' }
+    
+    %uib-tab{ heading: 'New Area' }
+      %form{ name: 'forms.new', 'ng-submit' => 'submit()' }
+        %area{ area: 'area' }
+      
+      {{ area }}
+
+    %uib-tab{ heading: 'Existing one', 'ng-if' => 'ready' }
+      %form{ name: 'forms.existing', 'ng-submit' => 'submit()' }
+        .form-group
+          %label
+            Which area?
+          %ui-select{ 'ng-model' => 'selection.area.current', 'on-select' => 'selection.area.set($item)' }
+            %ui-select-match
+              {{ $select.selected.name }}
+            %ui-select-choices{ repeat: 'area in selection.area.options' }
+              %span{ 'ng-bind-html' => "'' + area.name | highlight: $select.search" }
+        .form-group
+          %label
+            And which room in this area?
+          %ui-select{ 'ng-model' => 'selection.room.current', 'on-select' => 'selection.room.set($item)' }
+            %ui-select-match
+              {{ RoomUtilsService.title(selection.room.current) }}
+            %ui-select-choices{ repeat: 'room in selection.room.options' }
+              %span{ 'ng-bind-html' => "'' + RoomUtilsService.title(room) | highlight: $select.search" }
+        .alert.alert-danger{ 'ng-if' => '!validRoom()' }
+          This room does not have a free exit {{ DirectionsService.opposite.name(dir) }}.
+          %input{ style: 'display: none;', type: 'number', 'ng-model' => 'zero', min: '1' }
+.modal-footer
+  %button.btn.btn-primary.pull-right{ 'ng-click' => 'submit()', 'ng-disabled' => '!valid()' }
+    %span
+      Link

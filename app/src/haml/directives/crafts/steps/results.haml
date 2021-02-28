@@ -1,0 +1,74 @@
+.form-group
+  %label
+    Does this step produce any item results?
+  %button.btn.btn-xs.btn-primary.pull-right{ 'ng-click' => 'add.step.result.one(craftStep)' }
+    Add item result
+.well{ 'ng-repeat' => 'craftItemResult in craftStep.craft_item_results', 'ng-if' => '!craftItemResult._destroy' }
+  .row
+    .col-md-12
+      %button.btn.btn-xs.btn-danger.pull-right{ 'ng-click' => 'remove.step.result(craftStep, $index)' }
+        %i.fa.fa-times
+    .col-md-12{ style: 'margin-bottom: 10px' }
+      %button.btn.btn-xs.btn-primary{ 'ng-click' => 'add.step.result.itemTemplate(craftItemResult)' }
+        %i.fa.fa-edit
+      %span.label.label-default{ 'style' => 'font-size: 15px;', 'ng-if' => 'craftItemResult.auxItemTemplate' }
+        {{ ItemTemplateUtilsService.title(craftItemResult.auxItemTemplate) }}
+    .col-md-4
+      .form-group{ 'ng-if' => 'craftItemResult.hasHowMany' }
+        %label
+          How many?:
+        %input.form-control{ type: 'number', 'ng-model' => 'craftItemResult.how_many', min: '0', step: 1, required: true }
+    .col-md-4
+      .form-group{ 'ng-if' => 'craftItemResult.hasMaterialIngredientIndex' }
+        %label
+          Material index:
+        %ui-select{ 'ng-model' => 'craftItemResult.material_ingredient_index', 'on-select' => 'toggle.craftItemResult.ingredientMaterialIndex(model, craftItemResult)' }
+          %ui-select-match
+            {{ $select.selected }}
+          %ui-select-choices{ repeat: 'ingredientIndex in CraftUtilsService.ingredientIndexes(model)' }
+            %span{ 'ng-bind-html' => "'' + ingredientIndex | highlight: $select.search" }
+    .col-md-4
+      .form-group.no-margin-bottom{ 'ng-if' => 'craftItemResult.auxItemTemplate.variable_set_template.has_craftmanship' }
+        %label
+          Quality based on:
+          %i{ 'ng-if' => '!CraftValidityService.materialIndex.present(model, craftItemResult)' }
+            Choose ingredient first
+        %div{ 'ng-if' => 'CraftValidityService.materialIndex.present(model, craftItemResult) && CraftIngredientUtilsService.filter(model.craft_ingredients)[craftItemResult.material_ingredient_index - 1].auxItemTemplates[0].variable_set_template.has_craftmanship'}
+          .form-group
+            .btn-group
+              %label.btn.btn-xs.btn-success{ 'ng-model' => 'craftItemResult.auxBaseOn', 'ng-change' => 'toggle.craftItemResult.baseOn(craftItemResult)', 'uib-btn-radio' => "'inherit'" }
+                Inherit
+              %label.btn.btn-xs.btn-success{ 'ng-model' => 'craftItemResult.auxBaseOn', 'ng-change' => 'toggle.craftItemResult.baseOn(craftItemResult)', 'uib-btn-radio' => "'skill'" }
+                Skill
+        %ui-select{ 'ng-if' => "craftItemResult.auxBaseOn == 'skill'", 'ng-model' => 'craftItemResult.skill' }
+          %ui-select-match
+            {{ $select.selected }}
+          %ui-select-choices{ repeat: 'skill as skill in ConstantsCache.storage.skills.all' }
+            %span{ 'ng-bind-html' => "'' + skill | highlight: $select.search" }
+
+    .col-md-12{ 'ng-if' => 'craftItemResult.auxItemTemplate' }
+      .alert.alert-danger{ 'ng-if' => '!CraftValidityService.materialIndex.present(model, craftItemResult)' }
+        %input{ style: 'display: none;', type: 'number', 'ng-model' => 'zero', min: '1' }
+        There needs to be an ingredient that provides the material.
+      .alert.alert-danger{ 'ng-if' => '!CraftValidityService.materialIndex.withinBounds(model, craftItemResult)' }
+        %input{ style: 'display: none;', type: 'number', 'ng-model' => 'zero', min: '1' }
+        That index is out of bounds.
+      .alert.alert-danger{ 'ng-if' => '!CraftValidityService.materialIndex.hasAssociatedItemTemplate(model, craftItemResult)' }
+        %input{ style: 'display: none;', type: 'number', 'ng-model' => 'zero', min: '1' }
+        The selected ingredient does not have associated item templates.
+      .alert.alert-danger{ 'ng-if' => '!CraftValidityService.materialIndex.hasAssociatedMaterial(model, craftItemResult)' }
+        %input{ style: 'display: none;', type: 'number', 'ng-model' => 'zero', min: '1' }
+        The selected ingredient will not provide a material.
+      .alert.alert-danger{ 'ng-if' => '!CraftValidityService.materialIndex.materialMatches(model, craftItemResult)' }
+        %input{ style: 'display: none;', type: 'number', 'ng-model' => 'zero', min: '1' }
+        The selected ingredient's material type does not match the result's.
+.col-md-12
+  .alert.alert-danger{ 'ng-if' => '!CraftValidityService.echo.result.present(craftStep)' }
+    %input{ style: 'display: none;', type: 'number', 'ng-model' => 'zero', min: '1' }
+    Results must be referenced in their step echoes once and only once as
+    %i
+      $result{n}
+    \.
+  .alert.alert-danger{ 'ng-if' => '!CraftValidityService.echo.result.none(craftStep)' }
+    %input{ style: 'display: none;', type: 'number', 'ng-model' => 'zero', min: '1' }
+    Failure echoes cannot have $result references.

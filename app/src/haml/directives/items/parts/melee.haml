@@ -1,0 +1,21 @@
+%div
+  
+  %item-material{ model: 'model' }
+
+  %item-craftmanship{ model: 'model' }
+  
+  %item-common{ model: 'model' }
+
+  %item-worn{ model: 'model' }
+
+  %item-weapon-common{ model: 'model', type: "{{ 'melee' }}" }
+
+  .form-group
+    %label
+      Sheathed description is
+    %span.label.label-primary
+      {{ model.weapon_stat.melee_stat.sheathed_desc }}
+
+  %item-containing-inventory{ model: 'model' }
+  
+  {{ model }}

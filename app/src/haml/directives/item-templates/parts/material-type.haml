@@ -1,0 +1,13 @@
+%div
+  .form-group
+    %label
+      Which material type?
+    %i{ 'ng-if' => '!mandatory' }
+      Optional.
+    %i{ 'ng-if' => 'mandatory' }
+      Pick one.
+    %div
+      .btn-group
+        %label.btn.btn-success{ 'ng-model' => 'model.variable_set_template.material_type', 'ng-repeat' => 'materialType in ConstantsCache.storage.materials.types[type]', 'uib-btn-radio' => 'materialType', 'ng-change' => 'change(materialType)', uncheckable: '' }
+          {{ materialType }}
+        %input{ style: 'display: none;', type: 'number', 'ng-model' => 'zero', min: '1', 'ng-if' => 'mandatory && !model.variable_set_template.material_type' }

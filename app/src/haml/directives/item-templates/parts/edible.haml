@@ -1,0 +1,21 @@
+%form{ name: 'form', 'ng-submit' => 'submit()' }
+  
+  %item-template-common{ model: 'model' }
+
+  .form-group.col-md-6
+    %label
+      Number of bites per unit:
+    %item-template-stack{ model: 'model.food' }
+
+  .form-group.col-md-6
+    %label
+      Amount in the stack:
+    %item-template-stack{ model: 'model.stack' }
+
+  %button.btn.btn-primary.pull-right{ type: 'submit', 'ng-disabled' => 'form.$invalid' }
+    %span{ 'ng-if' => 'model.id' }
+      Update
+    %span{ 'ng-if' => '!model.id' }
+      Create
+  
+  {{ model }}

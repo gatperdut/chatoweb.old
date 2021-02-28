@@ -1,0 +1,27 @@
+%div
+  .form-group
+    %button.btn.btn-xs.btn-primary.pull-right{ 'ng-click' => 'add.step.one()' }
+      Add Step
+  %br
+  %br
+  .col-md-12.alert.alert-warning{ 'ng-if' => '!CraftStepUtilsService.filter(model.craft_steps).length' }
+    No steps added yet - at least one is required. Click on "Add Step" to start.
+
+  .alert.alert-danger{ 'ng-if' => '!CraftValidityService.echo.indexReferences.nonRepeat.withinCraft(model) || !CraftValidityService.echo.indexReferences.onceEach(model)' }
+    %input{ style: 'display: none;', type: 'number', 'ng-model' => 'zero', min: '1' }
+    Each ingredient reference must appear once and only once across all step echoes.
+
+  .well{ 'ng-repeat' => 'craftStep in model.craft_steps', 'ng-if' => '!craftStep._destroy' }
+    .row
+      .col-md-12
+        %span.badge.badge-success.pull-left
+          {{ $index + 1}}
+        %button.btn.btn-xs.btn-danger.pull-right{ 'ng-click' => 'remove.step.one($index)' }
+          %i.fa.fa-times
+      %br
+      .col-md-12
+        %div{ 'ng-include' => 'partials.steps.echoes' }
+        .well
+          %div{ 'ng-include' => 'partials.steps.check' }
+        .well.no-margin-bottom
+          %div{ 'ng-include' => 'partials.steps.results' }

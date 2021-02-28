@@ -1,0 +1,10 @@
+%div{ 'ng-show' => 'model.variable_set.has_craftmanship' }
+  .form-group
+    %label
+      What's the quality?
+    %i
+      Select one. Will reset descriptions.
+    %div
+      .btn-group
+        %label.btn.btn-success{ 'ng-model' => 'model.variable_set.craftmanship', 'ng-repeat' => 'craftmanship in ConstantsCache.storage.craftmanships.all', 'uib-btn-radio' => 'craftmanship', 'ng-change' => 'change()', 'ng-required' => 'model.variable_set.has_craftmanship' }
+          {{ craftmanship }}

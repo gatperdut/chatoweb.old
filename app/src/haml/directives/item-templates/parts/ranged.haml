@@ -1,0 +1,37 @@
+%form{ name: 'form', 'ng-submit' => 'submit()' }
+ 
+  %item-template-material-type{ model: 'model', type: "{{ 'ranged' }}", mandatory: 'true' }
+  
+  %item-template-common{ model: 'model' }
+
+  %item-template-worn{ model: 'model', mandatory: 'false' }
+
+  %item-template-weapon-common{ model: 'model', type: "{{ 'ranged' }}" }
+
+  .form-group
+    %label
+      Missile type:
+    %div
+      .btn-group
+        %label.btn.btn-success{ 'ng-model' => 'model.weapon_stat_template.ranged_stat_template.missile_type', 'ng-repeat' => 'missileType in ConstantsCache.storage.weaponInfo.missile_types', 'uib-btn-radio' => 'missileType' }
+          {{ missileType }}
+
+  .form-group
+    %label
+      Can it remain loaded?
+    %div
+      .btn-group
+        %label.btn.btn-success{ 'ng-model' => 'model.weapon_stat_template.ranged_stat_template.can_remain_loaded','uib-btn-radio' => 'true' }
+          Yes
+        %label.btn.btn-success{ 'ng-model' => 'model.weapon_stat_template.ranged_stat_template.can_remain_loaded','uib-btn-radio' => 'false' }
+          No
+  .form-group
+    %label
+      Range suitability (drag and drop from best to worst):
+
+  .dnd
+    %ul{ 'dnd-list' => 'dnd.list' }
+      %li{ 'ng-repeat' => 'item in dnd.list', 'dnd-draggable' => 'item', 'dnd-moved' => 'dnd.list.splice($index, 1)', 'dnd-effect-allowed' => 'move', 'dnd-selected' => 'dnd.selected = item', 'dnd-dragend' => 'refreshModel()', 'ng-class' => '{ selected: dnd.selected === item }' }
+        {{ item.label }}
+
+  {{ model }}

@@ -1,0 +1,70 @@
+.row
+  .col-md-12
+    %h2
+      Arda Marred LOTR Mud
+
+  .col-md-8.col-xs-12
+    %p
+      Welcome to
+      %strong
+        Arda Marred
+      \. First and foremost we would like to thank you, if you’re reading this you have likely come here either to contribute through creative building or as a player appraising the game. All contributions, large and small, are welcome.
+
+    %p
+      We few have started this community as we felt certain established Tolkien games were not doing justice to the work we all know and love. It was through our passion (and dare we say, saltiness) that we have come to our own realm to build a game which we hope will draw (and retain) players of all reaches, from hardcore veterans to budding newbies.
+    %p
+      It is our vision to create a Tolkien-based game that goes back to the tabletop roots, where players have creative freedom to forge ahead in their own stories, quests and triumphs. The game is meant to be played by admins as well as players, in a way to bring the world alive in a way only DM-style leadership can.
+    %p
+      Please take the time to go over the
+      %a{ href: '', 'ng-click' => 'InterfaceService.goTo.documentation()' }
+        documentation
+      and feel free to leave
+      %a{ href: 'https://github.com/chatomud/chatomud/issues/new', target: '_blank' }
+        questions and comments
+      \.
+    %p{ 'ng-if' => '!AuthService.isAuthenticated()' }
+      You can create an account
+      %a{ href: '', 'ng-click' => 'InterfaceService.goTo.public.signup()' }
+        here
+      , or
+      %a{ href: '', 'ng-click' => 'InterfaceService.goTo.public.login()' }
+        login
+      if you already possess one.
+    %p
+      To connect to the game, use a client (
+      %a{ href: 'https://sourceforge.net/projects/g-mud/', target: '_blank' }
+        Gmud
+      or
+      %a{ href: 'https://www.mudlet.org/download/', target: '_blank' }
+        Mudlet
+      , for example) and connect to
+      %strong
+        ardamarred.com
+      port
+      %strong
+        1234
+      \. Your credentials are the same as in the webpage.
+    %p
+      We have an active comunity in
+      %strong
+        Discord
+      \. Just follow
+      %a{ href: 'https://discord.gg/zbcqnwn', target: '_blank' }
+        this invite link
+      to join our server.
+    %p
+      %strong
+        You created an account, but you cannot log in?
+      Given we are still under development, the database is dropped with a certain regularity. Those accounts we have spotted are converted to "stock" accounts, and their password becomes their username. If we missed you, let us know in Discord or at chatomud@gmail.com
+  .col-md-4.col-xs-12
+    .well
+      .panel.panel-default
+        .panel-body
+          %h3.text-center
+            News
+      .panel.panel-default{ 'ng-repeat' => 'announcement in AnnouncementCache.storage.announcements' }
+        .panel-body
+          %h5
+            {{ announcement.title }}
+          %p
+            {{ announcement.content }}
